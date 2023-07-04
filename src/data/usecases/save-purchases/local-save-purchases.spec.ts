@@ -19,6 +19,10 @@ class CacheStoreSpy implements CacheStore {
         this.insertKey = key
         this.insertValues = value
     }
+
+    simuleteDeleteError(): void {
+        jest.spyOn(CacheStoreSpy.prototype, 'delete').mockImplementationOnce(() => { throw new Error() })
+    }
 }
 
 type TypeSut = {
@@ -39,14 +43,13 @@ const mockPurchases = (): Array<SavePurchase.Params> => [
         id: '1',
         date: new Date(),
         value: 40
-    }, 
+    },
     {
         id: '2',
         date: new Date(),
         value: 50
     }
 ]
-const purchases = mockPurchases()
 
 describe('LocalSavedPurchases', () => {
     test('Should not delete cache on sut.init', () => {
@@ -57,22 +60,22 @@ describe('LocalSavedPurchases', () => {
 
     test('Should delete old cache on sut.save and call delete with correct key ', async () => {
         const { cacheStore, sut } = makeSut()
-        await sut.save(purchases)
+        await sut.save(mockPurchases())
         expect(cacheStore.deleteCallsCount).toBe(1)
         expect(cacheStore.deleteKey).toBe('purchases')
     })
 
     test('Should not save insert cache if delete fails', () => {
         const { cacheStore, sut } = makeSut()
-        jest.spyOn(cacheStore, 'delete').mockImplementationOnce(() => { throw new Error() })
-        const promise = sut.save(purchases)
+        cacheStore.simuleteDeleteError()
+        const promise = sut.save(mockPurchases())
         expect(cacheStore.insertCallsCount).toBe(0)
         expect(promise).rejects.toThrow()
     })
 
     test('Should insert new  cache if delete succeds', async () => {
         const { cacheStore, sut } = makeSut()
-        // const purchases = mockPurchases()
+        const purchases = mockPurchases()
         await sut.save(purchases)
         expect(cacheStore.deleteCallsCount).toBe(1)
         expect(cacheStore.insertCallsCount).toBe(1)
