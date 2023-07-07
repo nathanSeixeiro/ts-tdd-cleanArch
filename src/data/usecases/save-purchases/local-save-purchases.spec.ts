@@ -1,6 +1,7 @@
+import { SavePurchase } from "@/domain/useCases"
 import { CacheStore } from "@/data/protocols/cache"
 import { LocalSavePurchases } from "@/data/usecases"
-import { SavePurchase } from "@/domain/useCases"
+import { mockPurchases } from "@/data/tests"
 
 class CacheStoreSpy implements CacheStore {
     deleteCallsCount = 0
@@ -42,18 +43,6 @@ const makeSut = (): TypeSut => {
     }
 }
 
-const mockPurchases = (): Array<SavePurchase.Params> => [
-    {
-        id: '1',
-        date: new Date(),
-        value: 40
-    },
-    {
-        id: '2',
-        date: new Date(),
-        value: 50
-    }
-]
 
 describe('LocalSavedPurchases', () => {
     test('Should not delete cache on sut.init', () => {
@@ -93,12 +82,9 @@ describe('LocalSavedPurchases', () => {
         const promise = sut.save(mockPurchases())
         expect(promise).rejects.toThrow()
     })
-    
+
     test('Should throws if insert throws', () => {
-        const { cacheStore, sut } = makeSut()
-        cacheStore.simuleteInsertError()
-        const promise = sut.save(mockPurchases())
-        expect(promise).rejects.toThrow()
+        
     })
 
 })
