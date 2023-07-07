@@ -18,22 +18,21 @@ const makeSut = (): TypeSut => {
 describe('LocalSavedPurchases', () => {
     test('Should not delete cache on sut.init', () => {
         const { cacheStore } = makeSut()
-
-        expect(cacheStore.deleteCallsCount).toBe(0)
+        expect(cacheStore.messages).toEqual([])
     })
-
-    test('Should delete old cache on sut.save and call delete with correct key ', async () => {
+    
+    test('Should delete old cache on sut.save', async () => {
         const { cacheStore, sut } = makeSut()
         await sut.save(mockPurchases())
-        expect(cacheStore.deleteCallsCount).toBe(1)
+        expect(cacheStore.messages).toEqual([CacheStoreSpy.Message.delete, CacheStoreSpy.Message.insert])
         expect(cacheStore.deleteKey).toBe('purchases')
     })
-
-    test('Should throws if delete throws', () => {
+    
+    test('Should not insert new Cache if delete fails', () => {
         const { cacheStore, sut } = makeSut()
         cacheStore.simuleteDeleteError()
         const promise = sut.save(mockPurchases())
-        expect(cacheStore.insertCallsCount).toBe(0)
+        expect(cacheStore.messages).toEqual([CacheStoreSpy.Message.delete])
         expect(promise).rejects.toThrow()
     })
     
@@ -41,8 +40,7 @@ describe('LocalSavedPurchases', () => {
         const { cacheStore, sut } = makeSut()
         const purchases = mockPurchases()
         await sut.save(purchases)
-        expect(cacheStore.deleteCallsCount).toBe(1)
-        expect(cacheStore.insertCallsCount).toBe(1)
+        expect(cacheStore.messages).toEqual([CacheStoreSpy.Message.delete, CacheStoreSpy.Message.insert])
         expect(cacheStore.insertKey).toBe('purchases')
         expect(cacheStore.insertValues).toEqual(purchases)
     })
@@ -51,11 +49,8 @@ describe('LocalSavedPurchases', () => {
         const { cacheStore, sut } = makeSut()
         cacheStore.simuleteInsertError()
         const promise = sut.save(mockPurchases())
+        expect(cacheStore.messages).toEqual([CacheStoreSpy.Message.delete, CacheStoreSpy.Message.insert])
         expect(promise).rejects.toThrow()
-    })
-
-    test('Should throws if insert throws', () => {
-        
     })
 
 })
