@@ -1,7 +1,7 @@
 import { CacheStore } from "@/data/protocols/cache";
 import { ISavePurchases, SavePurchase } from "@/domain/useCases";
 
-export class LocalSavePurchases implements ISavePurchases {
+export class LocalLoadPurchases implements ISavePurchases {
     constructor(
         private readonly cacheStore: CacheStore,
         private timestamps: Date
