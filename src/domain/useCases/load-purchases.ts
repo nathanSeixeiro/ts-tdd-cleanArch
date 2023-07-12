@@ -1,4 +1,4 @@
-import { PurchaseModel } from "../models/purchases-model"
+import { PurchaseModel } from "@/domain/models"
 
 export interface ILoadPurchases {
     loadAll: () => Promise<Array<LoadPurchase.Result>>
