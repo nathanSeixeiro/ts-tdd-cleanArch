@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/nathanSeixeiro/ts-tdd-cleanArch/badge.svg)](https://coveralls.io/github/nathanSeixeiro/ts-tdd-cleanArch)
+[![Coverage Status](https://coveralls.io/repos/github/rmanguinho/clean-node-api/badge.svg)](https://coveralls.io/github/nathanSeixeiro/ts-tdd-cleanArch)
 
 # Curso de TDD com TS 
 
