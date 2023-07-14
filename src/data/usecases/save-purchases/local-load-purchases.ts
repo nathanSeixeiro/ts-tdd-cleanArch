@@ -19,7 +19,6 @@ export class LocalLoadPurchases implements ISavePurchases, ILoadPurchases {
             if (CachePolicy.validate(cache.timestamp, this.currentDate)) {
                 return cache.value
             } else {
-                this.cacheStore.delete(this.key)
                 return []
             }
         } catch (error) {

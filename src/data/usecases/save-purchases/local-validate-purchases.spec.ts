@@ -14,7 +14,6 @@ const makeSut = (timestamps = new Date()): TypeSut => {
     }
 }
 
-
 describe('LocalSavedPurchases', () => {
     test('Should not delete cache on sut.init', () => {
         const { cacheStore } = makeSut()
@@ -29,7 +28,6 @@ describe('LocalSavedPurchases', () => {
         expect(cacheStore.deleteKey).toBe('purchases')
     })
 
-    
     test('Should has not side effects if load succeds', async () => {
         const currentDate = new Date()
         const timestamp = getCacheExpirationDate(currentDate)
@@ -40,4 +38,6 @@ describe('LocalSavedPurchases', () => {
         expect(cacheStore.actions).toEqual([CacheStoreSpy.Actions.fetch])
         expect(cacheStore.fetchKey).toBe('purchases')
     })
+
+    
 })

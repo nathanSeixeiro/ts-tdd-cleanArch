@@ -14,7 +14,6 @@ const makeSut = (timestamps = new Date()): TypeSut => {
     }
 }
 
-
 describe('LocalSavedPurchases', () => {
     test('Should not delete cache on sut.init', () => {
         const { cacheStore } = makeSut()
@@ -56,9 +55,8 @@ describe('LocalSavedPurchases', () => {
         }
         const purchases = await sut.loadAll()
 
-        expect(cacheStore.actions).toEqual([CacheStoreSpy.Actions.fetch, CacheStoreSpy.Actions.delete])
+        expect(cacheStore.actions).toEqual([CacheStoreSpy.Actions.fetch])
         expect(cacheStore.fetchKey).toBe('purchases')
-        expect(cacheStore.deleteKey).toBe('purchases')
         expect(purchases).toEqual([])
     })
     
@@ -73,9 +71,8 @@ describe('LocalSavedPurchases', () => {
         }
         const purchases = await sut.loadAll()
 
-        expect(cacheStore.actions).toEqual([CacheStoreSpy.Actions.fetch, CacheStoreSpy.Actions.delete])
+        expect(cacheStore.actions).toEqual([CacheStoreSpy.Actions.fetch])
         expect(cacheStore.fetchKey).toBe('purchases')
-        expect(cacheStore.deleteKey).toBe('purchases')
         expect(purchases).toEqual([])
     })
 
