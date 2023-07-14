@@ -2,7 +2,7 @@
 
 # Curso de TDD com TS 
 
-Código do curso ministrado pelo Rodrigo Manguinho no yt.
+Curso em Typescript sobre Test Drive Development e Clean Architecture, ministrado pelo Rodrigo Manguinho no yt.
 [Link para o curso completo no Youtube](https://www.youtube.com/playlist?list=PL9aKtVrF05DyEwK5kdvzrYXFdpZfj1dsG)
 
 ### Tópicos abordados
